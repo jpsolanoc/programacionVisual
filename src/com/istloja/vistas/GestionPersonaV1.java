@@ -5,17 +5,26 @@
  */
 package com.istloja.vistas;
 
+import com.istloja.controlador.Personabd;
+import com.istloja.modelo.Persona;
+import com.istloja.utilidad.Utilidades;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author johnp
  */
 public class GestionPersonaV1 extends javax.swing.JFrame {
 
+    private Utilidades utilidades;
+    private Personabd controladorPersona;
     /**
      * Creates new form GestionPersonaV1
      */
     public GestionPersonaV1() {
         initComponents();
+        utilidades = new Utilidades();
+        controladorPersona = new Personabd();
     }
 
     /**
@@ -186,8 +195,58 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        String datoCedula = txtCedula.getText();
-        System.out.println(datoCedula);
+        if (txtCedula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo cedula no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtCedula.requestFocus();// Sirve para ubicar el cursor en un campo vacio.
+            return;
+        }
+        if (!utilidades.validadorDeCedula(txtCedula.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "la cedula ingresada no es valida","ERROR",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (txtNombres.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo nombres no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtNombres.requestFocus();
+            return;
+        }if (txtApellidos.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo apellidos no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtApellidos.requestFocus();
+            return;
+        }
+        if (txtDireccion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo direccion no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtDireccion.requestFocus();
+            return;
+        }
+        if (txtTelefono.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo telefono no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtTelefono.requestFocus();
+            return;
+        }
+        if (!utilidades.validarNumeros(txtTelefono.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "Los datos ingresados en el telefono no son validos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtTelefono.requestFocus();
+            return;
+        }
+        if (txtCorreo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo correo no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            txtCorreo.requestFocus();
+            return;
+        }
+        Persona persona = new Persona();
+        persona.setCedula(txtCedula.getText());
+        persona.setNombre(txtNombres.getText());
+        persona.setApellidos(txtApellidos.getText());
+        persona.setDireccion(txtDireccion.getText());
+        persona.setCorreo(txtCorreo.getText());
+        persona.setTelefono(txtTelefono.getText());
+        System.out.println(persona.toString());
+        if (controladorPersona.registrarPersona(persona)) {
+            JOptionPane.showMessageDialog(rootPane, "Persona registrada en el sistema.");
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "No se puede guardar la persona","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
