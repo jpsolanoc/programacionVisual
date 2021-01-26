@@ -8,6 +8,7 @@ package com.istloja.vistas;
 import com.istloja.controlador.Personabd;
 import com.istloja.modelo.Persona;
 import com.istloja.utilidad.Utilidades;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +19,8 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
     private Utilidades utilidades;
     private Personabd controladorPersona;
+    private Persona personaEditar;
+
     /**
      * Creates new form GestionPersonaV1
      */
@@ -50,6 +53,7 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
         txtDireccion = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -76,6 +80,8 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
         lblCorreo.setText("Correo:");
 
+        jButton1.setText("Buscar");
+
         javax.swing.GroupLayout panelCuerpoRegistroLayout = new javax.swing.GroupLayout(panelCuerpoRegistro);
         panelCuerpoRegistro.setLayout(panelCuerpoRegistroLayout);
         panelCuerpoRegistroLayout.setHorizontalGroup(
@@ -90,9 +96,12 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
                             .addComponent(lblApellido))
                         .addGap(23, 23, 23)
                         .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                             .addComponent(txtNombres)
-                            .addComponent(txtApellidos)))
+                            .addComponent(txtApellidos)
+                            .addGroup(panelCuerpoRegistroLayout.createSequentialGroup()
+                                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addComponent(jButton1))))
                     .addGroup(panelCuerpoRegistroLayout.createSequentialGroup()
                         .addComponent(lblDireccion)
                         .addGap(18, 18, 18)
@@ -113,7 +122,8 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
@@ -145,24 +155,25 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
 
         btnTraer.setText("Traer");
+        btnTraer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(txtTitulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
@@ -173,6 +184,15 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addComponent(btnTraer)
                 .addGap(122, 122, 122))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(245, 245, 245)
+                        .addComponent(txtTitulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +207,7 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnEliminar)
                     .addComponent(btnTraer))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -195,43 +215,61 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        Persona personaGuardar = guardarEditar();
+        if (personaGuardar != null) {
+            if (controladorPersona.registrarPersona(personaGuardar)) {
+                JOptionPane.showMessageDialog(rootPane, "Persona registrada en el sistema.");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se puede guardar la persona", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public Persona guardarEditar() {
         if (txtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo cedula no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "El campo cedula no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtCedula.requestFocus();// Sirve para ubicar el cursor en un campo vacio.
-            return;
+            return null;
         }
         if (!utilidades.validadorDeCedula(txtCedula.getText())) {
-            JOptionPane.showMessageDialog(rootPane, "la cedula ingresada no es valida","ERROR",JOptionPane.ERROR_MESSAGE);
-            return;
+            JOptionPane.showMessageDialog(rootPane, "la cedula ingresada no es valida", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
         if (txtNombres.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombres no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "El campo nombres no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNombres.requestFocus();
-            return;
-        }if (txtApellidos.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo apellidos no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        if (txtApellidos.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo apellidos no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtApellidos.requestFocus();
-            return;
+            return null;
         }
         if (txtDireccion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo direccion no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "El campo direccion no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtDireccion.requestFocus();
-            return;
+            return null;
         }
         if (txtTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo telefono no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "El campo telefono no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtTelefono.requestFocus();
-            return;
+            return null;
         }
         if (!utilidades.validarNumeros(txtTelefono.getText())) {
-            JOptionPane.showMessageDialog(rootPane, "Los datos ingresados en el telefono no son validos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "Los datos ingresados en el telefono no son validos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtTelefono.requestFocus();
-            return;
+            return null;
         }
         if (txtCorreo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo correo no tiene datos.","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "El campo correo no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtCorreo.requestFocus();
-            return;
+            return null;
+        }
+        if (!utilidades.validarCorreo(txtCorreo.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "El correo ingresado no es valido.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtCorreo.requestFocus();
+            return null;
         }
         Persona persona = new Persona();
         persona.setCedula(txtCedula.getText());
@@ -240,14 +278,50 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
         persona.setDireccion(txtDireccion.getText());
         persona.setCorreo(txtCorreo.getText());
         persona.setTelefono(txtTelefono.getText());
-        System.out.println(persona.toString());
-        if (controladorPersona.registrarPersona(persona)) {
-            JOptionPane.showMessageDialog(rootPane, "Persona registrada en el sistema.");
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "No se puede guardar la persona","ERROR",JOptionPane.ERROR_MESSAGE);
-        }
+        return persona;
+    }
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        if (personaEditar == null) {
+            JOptionPane.showMessageDialog(rootPane, "No hay una persona seleccionada para editar", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Persona personaEditarLocal = guardarEditar();
+        if (personaEditarLocal != null) {
+            personaEditarLocal.setIdPersona(personaEditar.getIdPersona());
+            if (controladorPersona.actualizar(personaEditarLocal)) {
+                JOptionPane.showMessageDialog(rootPane, "Persona editada con exito del sitema.");
+                limpiarCampos();
+                personaEditar = null;
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "No se puede editar la persona", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnTraerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraerActionPerformed
+        // TODO add your handling code here:
+        List<Persona> obtenerPersonas = controladorPersona.obtenerPersonas();
+        personaEditar = obtenerPersonas.get(obtenerPersonas.size() - 1);
+        txtCedula.setText(personaEditar.getCedula());
+        txtNombres.setText(personaEditar.getNombre());
+        txtApellidos.setText(personaEditar.getApellidos());
+        txtDireccion.setText(personaEditar.getDireccion());
+        txtCorreo.setText(personaEditar.getCorreo());
+        txtTelefono.setText(personaEditar.getTelefono());
+    }//GEN-LAST:event_btnTraerActionPerformed
+    //Metodo para limpiar campos
+    public void limpiarCampos() {
+        txtCedula.setText("");
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtDireccion.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+        txtCedula.requestFocus();
+    }
 
     /**
      * @param args the command line arguments
@@ -289,6 +363,7 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnTraer;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
