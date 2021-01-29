@@ -19,7 +19,7 @@ import java.util.List;
  * @author johnp
  */
 public class Personabd {
-
+    // Registrar persona en la base de datos.
     public boolean registrarPersona(Persona persona) {
         boolean registrar = false;
         //Interfaz de acceso a la base de datos
@@ -42,7 +42,7 @@ public class Personabd {
         }
         return registrar;
     }
-
+    //ACtualizar la persona e la base de datos.
     public boolean actualizar(Persona persona) {
         // Conexion con la base de datos.
         Connection connect = null;
@@ -64,7 +64,7 @@ public class Personabd {
         }
         return actualizar;
     }
-
+    //Eliminar una persona en base al ID de la persona seleccionada de la base de datos.
     public boolean eliminar(Persona persona) {
         Connection connect = null;
         Statement stm = null;
@@ -80,7 +80,7 @@ public class Personabd {
         }
         return eliminar;
     }
-
+    //Sirve para traer todos los registros de persona de la base de datos 
     public List<Persona> obtenerPersonas() {
         Connection co = null;
         Statement stm = null;
@@ -111,6 +111,37 @@ public class Personabd {
         }
 
         return listaPersonas;
+    }
+    
+    //Metodo para buscar una persona por cedula
+    public Persona getPersonaCedula(String cedula) {
+        Connection co = null;
+        Statement stm = null;
+        //Sentencia de JDBC para obtener valores de la base de datos.
+        ResultSet rs = null;
+        Persona c = null;
+        String sql = "SELECT * FROM ejercicio.persona where cedula like "+cedula+";";
+        try {
+            co = new Conexion().conectarBaseDatos();
+            stm = co.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                c = new Persona();
+                c.setIdPersona(rs.getInt(1));
+                c.setCedula(rs.getString(2));
+                c.setNombre(rs.getString(3));
+                c.setApellidos(rs.getString(4));
+                c.setDireccion(rs.getString(5));
+                c.setCorreo(rs.getString(6));
+                c.setTelefono(rs.getString(7));
+            }
+            stm.close();
+            rs.close();
+            co.close();
+        } catch (SQLException e) {
+            System.out.println("Error:"+ e.getMessage());
+        }
+        return c;
     }
 
 }
