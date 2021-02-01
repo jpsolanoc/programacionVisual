@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author johnp
  */
+// Gestión entre la base de datos y el modelo que se tiene implementado en java.
 public class Personabd {
     // Registrar persona en la base de datos.
     public boolean registrarPersona(Persona persona) {

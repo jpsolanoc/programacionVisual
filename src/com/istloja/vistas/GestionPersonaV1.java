@@ -19,7 +19,7 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
     private Utilidades utilidades;
     private Personabd controladorPersona;
-    private Persona personaEditar;
+    private Persona personaEditarEliminar;
 
     /**
      * Creates new form GestionPersonaV1
@@ -59,6 +59,14 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnTraer = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuArchivo = new javax.swing.JMenu();
+        menuSalir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuBuscarPersona = new javax.swing.JMenuItem();
+        menuEditar = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestion Personas");
@@ -81,7 +89,10 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
         lblCorreo.setText("Correo:");
 
+        txtCedula.setToolTipText("Ingrese una cédula correcta.");
+
         btnBuscarCedula.setText("Buscar");
+        btnBuscarCedula.setToolTipText("Buscar persona por cédula.");
         btnBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarCedulaActionPerformed(evt);
@@ -175,6 +186,11 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnTraer.setText("Traer");
         btnTraer.addActionListener(new java.awt.event.ActionListener() {
@@ -183,34 +199,76 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiar.setText("Limpiar Formulario");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        menuArchivo.setText("Archivo");
+
+        menuSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        menuSalir.setText("Salir");
+        menuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSalirActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(menuSalir);
+
+        jMenu2.setText("Acciones Persona");
+
+        menuBuscarPersona.setText("Buscar");
+        menuBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBuscarPersonaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuBuscarPersona);
+
+        menuArchivo.add(jMenu2);
+
+        jMenuBar1.add(menuArchivo);
+
+        menuEditar.setText("Editar");
+        jMenuBar1.add(menuEditar);
+
+        jMenu1.setText("Acerca de");
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addGap(64, 64, 64)
-                .addComponent(btnEditar)
-                .addGap(70, 70, 70)
-                .addComponent(btnEliminar)
-                .addGap(77, 77, 77)
-                .addComponent(btnTraer)
-                .addGap(122, 122, 122))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(245, 245, 245)
                         .addComponent(txtTitulo))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(btnGuardar)
+                                .addGap(54, 54, 54)
+                                .addComponent(btnEditar)
+                                .addGap(49, 49, 49)
+                                .addComponent(btnEliminar)
+                                .addGap(59, 59, 59)
+                                .addComponent(btnTraer)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnLimpiar)))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
                 .addComponent(txtTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,8 +277,9 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
                     .addComponent(btnGuardar)
                     .addComponent(btnEditar)
                     .addComponent(btnEliminar)
-                    .addComponent(btnTraer))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(btnTraer)
+                    .addComponent(btnLimpiar))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         pack();
@@ -301,17 +360,17 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        if (personaEditar == null) {
+        if (personaEditarEliminar == null) {
             JOptionPane.showMessageDialog(rootPane, "No hay una persona seleccionada para editar", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Persona personaEditarLocal = guardarEditar();
         if (personaEditarLocal != null) {
-            personaEditarLocal.setIdPersona(personaEditar.getIdPersona());
+            personaEditarLocal.setIdPersona(personaEditarEliminar.getIdPersona());
             if (controladorPersona.actualizar(personaEditarLocal)) {
                 JOptionPane.showMessageDialog(rootPane, "Persona editada con exito del sitema.");
                 limpiarCampos();
-                personaEditar = null;
+                personaEditarEliminar = null;
             } else {
                 JOptionPane.showMessageDialog(rootPane, "No se puede editar la persona", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
@@ -321,30 +380,64 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
     private void btnTraerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraerActionPerformed
         // TODO add your handling code here:
         List<Persona> obtenerPersonas = controladorPersona.obtenerPersonas();
-        personaEditar = obtenerPersonas.get(obtenerPersonas.size() - 1);
-        txtCedula.setText(personaEditar.getCedula());
-        txtNombres.setText(personaEditar.getNombre());
-        txtApellidos.setText(personaEditar.getApellidos());
-        txtDireccion.setText(personaEditar.getDireccion());
-        txtCorreo.setText(personaEditar.getCorreo());
-        txtTelefono.setText(personaEditar.getTelefono());
+        personaEditarEliminar = obtenerPersonas.get(obtenerPersonas.size() - 1);
+        txtCedula.setText(personaEditarEliminar.getCedula());
+        txtNombres.setText(personaEditarEliminar.getNombre());
+        txtApellidos.setText(personaEditarEliminar.getApellidos());
+        txtDireccion.setText(personaEditarEliminar.getDireccion());
+        txtCorreo.setText(personaEditarEliminar.getCorreo());
+        txtTelefono.setText(personaEditarEliminar.getTelefono());
     }//GEN-LAST:event_btnTraerActionPerformed
 
-    private void btnBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCedulaActionPerformed
-        // TODO add your handling code here:
-        Persona persona = controladorPersona.getPersonaCedula(txtCedula.getText());
+    public void buscarPersonaPorCedula(){
+       Persona persona = controladorPersona.getPersonaCedula(txtCedula.getText());
         if (persona != null) {
             txtNombres.setText(persona.getNombre());
             txtApellidos.setText(persona.getApellidos());
             txtDireccion.setText(persona.getDireccion());
             txtCorreo.setText(persona.getCorreo());
             txtTelefono.setText(persona.getTelefono());
+            personaEditarEliminar = persona;
         } else {
             JOptionPane.showMessageDialog(rootPane, "No se encontro la persona con ese número de cédula en la base de datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtCedula.setText("");
             txtCedula.requestFocus();
-        }
+        } 
+    }
+    
+    private void btnBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCedulaActionPerformed
+        // TODO add your handling code here:
+        buscarPersonaPorCedula();
     }//GEN-LAST:event_btnBuscarCedulaActionPerformed
+    //Eliminar una persona de la base de datos.
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:asdasd
+        if (personaEditarEliminar != null) {
+            if (controladorPersona.eliminar(personaEditarEliminar)) {
+                JOptionPane.showMessageDialog(rootPane, "Persona eliminada con éxito del sitema.");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se puede eliminar la persona seleccionada.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No hay persona seleccionada para eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_menuSalirActionPerformed
+
+    private void menuBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBuscarPersonaActionPerformed
+        // TODO add your handling code here:
+        buscarPersonaPorCedula();
+    }//GEN-LAST:event_menuBuscarPersonaActionPerformed
     //Metodo para limpiar campos
     public void limpiarCampos() {
         txtCedula.setText("");
@@ -396,14 +489,22 @@ public class GestionPersonaV1 extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnTraer;
     private javax.swing.JButton jButton1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JMenu menuArchivo;
+    private javax.swing.JMenuItem menuBuscarPersona;
+    private javax.swing.JMenu menuEditar;
+    private javax.swing.JMenuItem menuSalir;
     private javax.swing.JPanel panelCuerpoRegistro;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCedula;
