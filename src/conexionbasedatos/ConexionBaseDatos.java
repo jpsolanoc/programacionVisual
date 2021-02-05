@@ -38,7 +38,7 @@ public class ConexionBaseDatos {
 //        } else {
 //            System.out.println("No se pudo eliminar");
 //        }
-        GestionPersona gestionPersona = new GestionPersona();
+      //  GestionPersona gestionPersona = new GestionPersona();
 
     }
     
