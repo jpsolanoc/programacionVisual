@@ -144,5 +144,38 @@ public class Personabd {
         }
         return c;
     }
+    
+    //Metodo para buscar una persona por cedula
+    public List<Persona> getPersonaNombre(String nombre) {
+        Connection co = null;
+        Statement stm = null;
+        //Sentencia de JDBC para obtener valores de la base de datos.
+        ResultSet rs = null;
+        List<Persona> personasEncontradas = new ArrayList<>();
+        String sql = "SELECT * FROM ejercicio.persona where nombres like \"%"+nombre+"%\"";
+        try {
+            co = new Conexion().conectarBaseDatos();
+            stm = co.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Persona c = new Persona();
+                c.setIdPersona(rs.getInt(1));
+                c.setCedula(rs.getString(2));
+                c.setNombre(rs.getString(3));
+                c.setApellidos(rs.getString(4));
+                c.setDireccion(rs.getString(5));
+                c.setCorreo(rs.getString(6));
+                c.setTelefono(rs.getString(7));
+                personasEncontradas.add(c);
+            }
+            stm.close();
+            rs.close();
+            co.close();
+        } catch (SQLException e) {
+            System.out.println("Error:"+ e.getMessage());
+        }
+        return personasEncontradas;
+    }
+
 
 }

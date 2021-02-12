@@ -6,8 +6,12 @@
 package com.istloja.vistas;
 
 import com.istloja.controlador.Personabd;
+import com.istloja.modelTables.ComunicacionPersona;
+import com.istloja.modelTables.ModelTablePersona;
+import com.istloja.modelTables.ModelTablePersonaV2;
 import com.istloja.modelo.Persona;
 import com.istloja.utilidad.Utilidades;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -15,21 +19,27 @@ import javax.swing.JOptionPane;
  *
  * @author johnp
  */
-public class GestionContable extends javax.swing.JFrame {
+public class GestionContable extends javax.swing.JFrame implements ComunicacionPersona{
 
     private Utilidades utilidades;
     private Personabd controladorPersona;
     private Persona personaEditarEliminar;
     private GestionPersona gestionPersona;
-    
+    //private ModelTablePersona modelTablePersona;
+    private ModelTablePersonaV2 modelTablePersonaV2;
+
     /**
      * Creates new form GestionPersonaV1
      */
     public GestionContable() {
+        controladorPersona = new Personabd();
+        // modelTablePersona = new ModelTablePersona(controladorPersona.obtenerPersonas(),this);
+        modelTablePersonaV2 = new ModelTablePersonaV2(controladorPersona.obtenerPersonas(),this);
         initComponents();
         utilidades = new Utilidades();
-        controladorPersona = new Personabd();
-        gestionPersona = new GestionPersona(txtCedula, txtNombres, txtApellidos, txtDireccion, txtCorreo, txtTelefono,utilidades,this);
+
+        gestionPersona = new GestionPersona(txtCedula, txtNombres, txtApellidos, txtDireccion, txtCorreo, txtTelefono, utilidades, this);
+
     }
 
     /**
@@ -222,17 +232,7 @@ public class GestionContable extends javax.swing.JFrame {
             }
         });
 
-        tablaCliente.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tablaCliente.setModel(modelTablePersonaV2);
         jScrollCliente.setViewportView(tablaCliente);
 
         lblBuscarCliente.setText("Buscar Cliente");
@@ -240,19 +240,21 @@ public class GestionContable extends javax.swing.JFrame {
         comboParametroBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cédula", "Nombres", "Apellidos", "Telefono", "Correo" }));
 
         btnBuscarPersona.setText("Buscar");
+        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPersonaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelClienteLayout = new javax.swing.GroupLayout(panelCliente);
         panelCliente.setLayout(panelClienteLayout);
         panelClienteLayout.setHorizontalGroup(
             panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelClienteLayout.createSequentialGroup()
-                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelClienteLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(txtTituloCliente))
-                    .addGroup(panelClienteLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelClienteLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
                         .addComponent(btnGuardar)
@@ -264,19 +266,21 @@ public class GestionContable extends javax.swing.JFrame {
                         .addComponent(btnTraer)
                         .addGap(62, 62, 62)
                         .addComponent(btnLimpiar))
-                    .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelClienteLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(lblBuscarCliente)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtParametroBusqueda)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnBuscarPersona))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelClienteLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelClienteLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(lblBuscarCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtParametroBusqueda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarPersona))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClienteLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollCliente))
+                    .addGroup(panelClienteLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelCuerpoRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(289, Short.MAX_VALUE))
         );
         panelClienteLayout.setVerticalGroup(
@@ -437,7 +441,6 @@ public class GestionContable extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         if (personaEditarEliminar == null) {
@@ -469,8 +472,8 @@ public class GestionContable extends javax.swing.JFrame {
         txtTelefono.setText(personaEditarEliminar.getTelefono());
     }//GEN-LAST:event_btnTraerActionPerformed
 
-    public void buscarPersonaPorCedula(){
-       Persona persona = controladorPersona.getPersonaCedula(txtCedula.getText());
+    public void buscarPersonaPorCedula() {
+        Persona persona = controladorPersona.getPersonaCedula(txtCedula.getText());
         if (persona != null) {
             txtNombres.setText(persona.getNombre());
             txtApellidos.setText(persona.getApellidos());
@@ -482,9 +485,9 @@ public class GestionContable extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "No se encontro la persona con ese número de cédula en la base de datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtCedula.setText("");
             txtCedula.requestFocus();
-        } 
+        }
     }
-    
+
     private void btnBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCedulaActionPerformed
         // TODO add your handling code here:
         buscarPersonaPorCedula();
@@ -518,8 +521,18 @@ public class GestionContable extends javax.swing.JFrame {
         // TODO add your handling code here:
         buscarPersonaPorCedula();
     }//GEN-LAST:event_menuBuscarPersonaActionPerformed
+
+    private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
+        // TODO add your handling code here:
+//        List<Persona> personas = new ArrayList<>();
+//        personas.add(controladorPersona.getPersonaCedula(txtParametroBusqueda.getText()));
+//        modelTablePersonaV2.setPersonas(personas);
+//        modelTablePersonaV2.fireTableDataChanged();
+        List<Persona> personaNombre = controladorPersona.getPersonaNombre(txtParametroBusqueda.getText());
+        modelTablePersonaV2.setPersonas(personaNombre);
+        modelTablePersonaV2.fireTableDataChanged();
+    }//GEN-LAST:event_btnBuscarPersonaActionPerformed
     //Metodo para limpiar campos
-   
 
     /**
      * @param args the command line arguments
@@ -601,4 +614,17 @@ public class GestionContable extends javax.swing.JFrame {
     private javax.swing.JLabel txtTituloProveedores;
     private javax.swing.JLabel txtTituloVenta;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void clickPersona(Persona p) {
+        txtCedula.setText(p.getCedula());
+        txtNombres.setText(p.getNombre());
+        txtApellidos.setText(p.getApellidos());
+        txtDireccion.setText(p.getDireccion());
+        txtTelefono.setText(p.getDireccion());
+        txtCorreo.setText(p.getCorreo());
+    }
+
+
+
 }
