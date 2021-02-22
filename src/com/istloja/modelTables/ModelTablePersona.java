@@ -21,7 +21,7 @@ public class ModelTablePersona extends AbstractTableModel {
 
     public List<Persona> personas;
 
-    private ComunicacionPersona comunicacionPersona;
+    private ComunicacionVistaModelosTablas comunicacionPersona;
     private GestionContable gestionContable;
     public ModelTablePersona(List<Persona> personas,GestionContable gestionContable) {
         this.personas = personas;
