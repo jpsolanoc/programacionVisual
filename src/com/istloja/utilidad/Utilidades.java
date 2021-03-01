@@ -80,5 +80,15 @@ public class Utilidades {
         }
         return false;
     }
+    
+    //Metodo sirve para validar los numeros de cedula de las personas.
+    public boolean validarNumerosInventario(String numero){
+        try {
+            int validarNumero=Integer.parseInt(numero);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

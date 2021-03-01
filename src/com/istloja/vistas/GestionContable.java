@@ -5,6 +5,7 @@
  */
 package com.istloja.vistas;
 
+import com.istloja.controlador.Inventariodb;
 import com.istloja.controlador.Personabd;
 import com.istloja.controlador.Proveedoresdb;
 import com.istloja.modelTables.ModelTablePersona;
@@ -16,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import com.istloja.modelTables.ComunicacionVistaModelosTablas;
+import com.istloja.modelTables.ModelTableInventario;
 import com.istloja.modelTables.ModelTableProveedores;
+import com.istloja.modelo.Inventario;
 
 /**
  *
@@ -31,7 +34,10 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     //private ModelTablePersona modelTablePersona;
     private ModelTablePersonaV2 modelTablePersonaV2;
     private ModelTableProveedores modelTableProveedores;
+    private ModelTableInventario modelTableInventario;
     private Proveedoresdb controladorProveedor;
+    private Inventariodb controladorInventario;
+    private Inventario inventarioSeleccionado;
 
     /**
      * Creates new form GestionPersonaV1
@@ -39,9 +45,11 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     public GestionContable() {
         controladorPersona = new Personabd();
         controladorProveedor = new Proveedoresdb();
+        controladorInventario = new Inventariodb();
         // modelTablePersona = new ModelTablePersona(controladorPersona.obtenerPersonas(),this);
         modelTablePersonaV2 = new ModelTablePersonaV2(controladorPersona.obtenerPersonas(), this);
         modelTableProveedores = new ModelTableProveedores(controladorProveedor.obtenerProveedores(), this);
+        modelTableInventario = new ModelTableInventario(controladorInventario.obtenerProductosInventario(), this);
         initComponents();
         utilidades = new Utilidades();
 
@@ -115,6 +123,26 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         btnBuscarProveedor = new javax.swing.JButton();
         panelInventario = new javax.swing.JPanel();
         txtTituloInventario = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtInventarioCodProducto = new javax.swing.JTextField();
+        txtInventarioDescripcion = new javax.swing.JTextField();
+        txtInventarioPrecioCompra = new javax.swing.JTextField();
+        txtInventarioPrecioVenta = new javax.swing.JTextField();
+        txtInventarioCantidadProdcutos = new javax.swing.JTextField();
+        btnInventarioCrear = new javax.swing.JButton();
+        btnInventarioEditar = new javax.swing.JButton();
+        btnInventarioEliminar = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        comboBoxInventarioBusqueda = new javax.swing.JComboBox<>();
+        txtInventarioBusqueda = new javax.swing.JTextField();
+        btnInventaripBusqueda = new javax.swing.JButton();
+        tblInventario = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         panelVenta = new javax.swing.JPanel();
         txtTituloVenta = new javax.swing.JLabel();
         menuGeneral = new javax.swing.JMenuBar();
@@ -473,19 +501,18 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                 .addGap(36, 36, 36)
                 .addGroup(panelProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(panelProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(panelProveedoresLayout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboParamtroBusquedaProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtParametroBusquedaProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnBuscarProveedor))
-                        .addGroup(panelProveedoresLayout.createSequentialGroup()
-                            .addGap(47, 47, 47)
-                            .addComponent(txtTituloProveedores)
-                            .addGap(850, 850, 850)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProveedoresLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboParamtroBusquedaProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtParametroBusquedaProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscarProveedor))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProveedoresLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(txtTituloProveedores)
+                        .addGap(850, 850, 850))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -512,21 +539,158 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtTituloInventario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         txtTituloInventario.setText("Resgistro inventario");
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Inventario"));
+
+        jLabel9.setText("Codigo Producto");
+
+        jLabel10.setText("Descripción");
+
+        jLabel11.setText("Precio Compra");
+
+        jLabel12.setText("Precio Venta");
+
+        jLabel13.setText("Cantidad prodcutos");
+
+        btnInventarioCrear.setText("Crear");
+        btnInventarioCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioCrearActionPerformed(evt);
+            }
+        });
+
+        btnInventarioEditar.setText("Editar");
+        btnInventarioEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioEditarActionPerformed(evt);
+            }
+        });
+
+        btnInventarioEliminar.setText("Eliminar");
+        btnInventarioEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioEliminarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtInventarioCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtInventarioDescripcion)
+                            .addComponent(txtInventarioPrecioCompra)
+                            .addComponent(txtInventarioPrecioVenta)
+                            .addComponent(txtInventarioCantidadProdcutos, javax.swing.GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnInventarioCrear)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventarioEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventarioEliminar)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtInventarioCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtInventarioDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtInventarioPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtInventarioPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtInventarioCantidadProdcutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInventarioCrear)
+                    .addComponent(btnInventarioEliminar)
+                    .addComponent(btnInventarioEditar))
+                .addGap(24, 24, 24))
+        );
+
+        jLabel14.setText("Busqueda");
+
+        comboBoxInventarioBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo Producto", "Descripcion" }));
+
+        btnInventaripBusqueda.setText("Buscar");
+        btnInventaripBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventaripBusquedaActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(modelTableInventario);
+        tblInventario.setViewportView(jTable1);
+
         javax.swing.GroupLayout panelInventarioLayout = new javax.swing.GroupLayout(panelInventario);
         panelInventario.setLayout(panelInventarioLayout);
         panelInventarioLayout.setHorizontalGroup(
             panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInventarioLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(txtTituloInventario)
-                .addContainerGap(926, Short.MAX_VALUE))
+                .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(txtTituloInventario)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxInventarioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(txtInventarioBusqueda)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventaripBusqueda))
+                    .addGroup(panelInventarioLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tblInventario)))
+                .addContainerGap())
         );
         panelInventarioLayout.setVerticalGroup(
             panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInventarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtTituloInventario)
-                .addContainerGap(838, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelInventarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(comboBoxInventarioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtInventarioBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInventaripBusqueda))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tblInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Inventario", panelInventario);
@@ -738,7 +902,82 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
             JOptionPane.showMessageDialog(rootPane, "No se puede guardar el proveedor.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarProveedoresActionPerformed
-    //Metodo para limpiar campos
+
+    private void btnInventarioEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioEliminarActionPerformed
+        if (inventarioSeleccionado != null) {
+            if (controladorInventario.eliminarInventario(inventarioSeleccionado)) {
+                JOptionPane.showMessageDialog(rootPane, "Producto eliminado con éxito del sitema.");
+                limpiarInventario();
+                inventarioSeleccionado = null;
+                modelTableInventario.setInventarios(controladorInventario.obtenerProductosInventario());
+                modelTableInventario.fireTableDataChanged();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se puede eliminar el producto seleccionado.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No hay producto seleccionada para eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnInventarioEliminarActionPerformed
+
+    private void btnInventarioEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioEditarActionPerformed
+        // TODO add your handling code here:sadas
+        // TODO add your handling code here:
+        if (inventarioSeleccionado == null) {
+            JOptionPane.showMessageDialog(rootPane, "No hay una propducto seleccionado para editar", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (inventarioSeleccionado != null) {
+            inventarioSeleccionado = valoresActualizarInventario(inventarioSeleccionado);
+            if (controladorInventario.actualizarInventario(inventarioSeleccionado)) {
+                JOptionPane.showMessageDialog(rootPane, "Producto editado con exito del sitema.");
+                limpiarInventario();
+                inventarioSeleccionado = null;
+                modelTableInventario.setInventarios(controladorInventario.obtenerProductosInventario());
+                modelTableInventario.fireTableDataChanged();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "No se puede editar la Producto", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnInventarioEditarActionPerformed
+
+    private void btnInventarioCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioCrearActionPerformed
+        // TODO add your handling code here:
+        Inventario i = new Inventario();
+        i.setCodProducto(txtInventarioCodProducto.getText());
+        i.setDescripcion(txtInventarioDescripcion.getText());
+        i.setPrecioCompra(txtInventarioPrecioCompra.getText());
+        i.setPrecioVenta(txtInventarioPrecioVenta.getText());
+        i.setCanProductos(txtInventarioCantidadProdcutos.getText());
+        controladorInventario.registrarProducto(i);
+        modelTableInventario.setInventarios(controladorInventario.obtenerProductosInventario());
+        modelTableInventario.fireTableDataChanged();
+    }//GEN-LAST:event_btnInventarioCrearActionPerformed
+
+    private void btnInventaripBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventaripBusquedaActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Combo" + comboBoxInventarioBusqueda.getSelectedIndex());
+        switch (comboBoxInventarioBusqueda.getSelectedIndex()) {
+            case 0://Codigo
+                modelTableInventario.setInventarios(controladorInventario.obtenerProductosInventarioCodigo(txtInventarioBusqueda.getText()));
+                modelTableInventario.fireTableDataChanged();
+                break;
+            case 1://7Descripcion
+                modelTableInventario.setInventarios(controladorInventario.obtenerProductosInventarioDescripcion(txtInventarioBusqueda.getText()));
+                modelTableInventario.fireTableDataChanged();
+                break;
+        }
+    }//GEN-LAST:event_btnInventaripBusquedaActionPerformed
+
+    private Inventario valoresActualizarInventario(Inventario i) {
+        i.setCodProducto(txtInventarioCodProducto.getText());
+        i.setDescripcion(txtInventarioDescripcion.getText());
+        i.setPrecioCompra(txtInventarioPrecioCompra.getText());
+        i.setPrecioVenta(txtInventarioPrecioVenta.getText());
+        i.setCanProductos(txtInventarioCantidadProdcutos.getText());
+        return i;
+    }
+
+//Metodo para limpiar campos
     void limpiarCamposProveedor() {
         txtRucProveedores.setText("");
         txtRazonSocialProveedores.setText("");
@@ -747,6 +986,14 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtApellidosRepresentateLegalProveedores.setText("");
         txtTelefonoProveedores.setText("");
         txtCorrreoProveedores.setText("");
+    }
+
+    void limpiarInventario() {
+        txtInventarioCodProducto.setText("");
+        txtInventarioDescripcion.setText("");
+        txtInventarioPrecioCompra.setText("");
+        txtInventarioPrecioVenta.setText("");
+        txtInventarioCantidadProdcutos.setText("");
     }
 
     /**
@@ -795,12 +1042,22 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JButton btnElimnarProveedores;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardarProveedores;
+    private javax.swing.JButton btnInventarioCrear;
+    private javax.swing.JButton btnInventarioEditar;
+    private javax.swing.JButton btnInventarioEliminar;
+    private javax.swing.JButton btnInventaripBusqueda;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnTraer;
+    private javax.swing.JComboBox<String> comboBoxInventarioBusqueda;
     private javax.swing.JComboBox<String> comboParametroBusqueda;
     private javax.swing.JComboBox<String> comboParamtroBusquedaProveedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -808,11 +1065,14 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollCliente;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblBuscarCliente;
     private javax.swing.JLabel lblCedula;
@@ -833,12 +1093,19 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JTabbedPane tabGeneral;
     private javax.swing.JTable tablaCliente;
     private javax.swing.JTable tablaProvedores;
+    private javax.swing.JScrollPane tblInventario;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtApellidosRepresentateLegalProveedores;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtCorrreoProveedores;
     private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtInventarioBusqueda;
+    private javax.swing.JTextField txtInventarioCantidadProdcutos;
+    private javax.swing.JTextField txtInventarioCodProducto;
+    private javax.swing.JTextField txtInventarioDescripcion;
+    private javax.swing.JTextField txtInventarioPrecioCompra;
+    private javax.swing.JTextField txtInventarioPrecioVenta;
     private javax.swing.JTextField txtNombreRepresentateLegalProveedores;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtParametroBusqueda;
@@ -879,7 +1146,17 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtApellidosRepresentateLegalProveedores.setText(p.getApellidosRepresentanteLegal());
         txtTelefonoProveedores.setText(p.getTelefono());
         txtCorrreoProveedores.setText(p.getCorreo());
-        
+
+    }
+
+    @Override
+    public void clickInventario(Inventario i) {
+        inventarioSeleccionado = i;
+        txtInventarioCodProducto.setText(i.getCodProducto());
+        txtInventarioDescripcion.setText(i.getDescripcion());
+        txtInventarioPrecioCompra.setText(i.getPrecioCompra());
+        txtInventarioPrecioVenta.setText(i.getPrecioVenta());
+        txtInventarioCantidadProdcutos.setText(i.getCanProductos());
     }
 
 }
