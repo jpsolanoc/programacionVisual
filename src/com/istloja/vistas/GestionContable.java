@@ -82,8 +82,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtDireccion = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        btnBuscarCedula = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -94,7 +92,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         lblBuscarCliente = new javax.swing.JLabel();
         comboParametroBusqueda = new javax.swing.JComboBox<>();
         txtParametroBusqueda = new javax.swing.JTextField();
-        btnBuscarPersona = new javax.swing.JButton();
         panelProveedores = new javax.swing.JPanel();
         txtTituloProveedores = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -175,16 +172,11 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         lblCorreo.setText("Correo:");
 
         txtCedula.setToolTipText("Ingrese una cédula correcta.");
-
-        btnBuscarCedula.setText("Buscar");
-        btnBuscarCedula.setToolTipText("Buscar persona por cédula.");
-        btnBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarCedulaActionPerformed(evt);
+        txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCedulaFocusLost(evt);
             }
         });
-
-        jButton1.setText("Buscar Apellido");
 
         javax.swing.GroupLayout panelCuerpoRegistroLayout = new javax.swing.GroupLayout(panelCuerpoRegistro);
         panelCuerpoRegistro.setLayout(panelCuerpoRegistroLayout);
@@ -200,15 +192,9 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                             .addComponent(lblApellido))
                         .addGap(23, 23, 23)
                         .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombres)
-                            .addGroup(panelCuerpoRegistroLayout.createSequentialGroup()
-                                .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBuscarCedula))
-                            .addGroup(panelCuerpoRegistroLayout.createSequentialGroup()
-                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))))
+                            .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
+                            .addComponent(txtCedula)
+                            .addComponent(txtApellidos)))
                     .addGroup(panelCuerpoRegistroLayout.createSequentialGroup()
                         .addComponent(lblDireccion)
                         .addGap(18, 18, 18)
@@ -229,8 +215,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                 .addContainerGap()
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarCedula))
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
@@ -238,9 +223,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblApellido)
-                    .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)))
+                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelCuerpoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDireccion)
@@ -298,16 +281,10 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
 
         comboParametroBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cédula", "Nombres", "Apellidos", "Telefono", "Correo" }));
 
+        txtParametroBusqueda.setToolTipText("Para realizar  busqueda ingrese alguna parametro.");
         txtParametroBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtParametroBusquedaKeyReleased(evt);
-            }
-        });
-
-        btnBuscarPersona.setText("Buscar");
-        btnBuscarPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarPersonaActionPerformed(evt);
             }
         });
 
@@ -337,9 +314,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtParametroBusqueda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarPersona))
+                        .addComponent(txtParametroBusqueda))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClienteLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollCliente))
@@ -362,15 +337,14 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                     .addComponent(btnTraer)
                     .addComponent(btnLimpiar)
                     .addComponent(btnGuardar))
-                .addGap(8, 8, 8)
+                .addGap(9, 9, 9)
                 .addGroup(panelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscarCliente)
                     .addComponent(comboParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarPersona))
+                    .addComponent(txtParametroBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Clientes", panelCliente);
@@ -829,10 +803,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         }
     }
 
-    private void btnBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCedulaActionPerformed
-        // TODO add your handling code here:
-        buscarPersonaPorCedula();
-    }//GEN-LAST:event_btnBuscarCedulaActionPerformed
     //Eliminar una persona de la base de datos.
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:asdasd
@@ -862,17 +832,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         // TODO add your handling code here:
         buscarPersonaPorCedula();
     }//GEN-LAST:event_menuBuscarPersonaActionPerformed
-
-    private void btnBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPersonaActionPerformed
-        // TODO add your handling code here:
-//        List<Persona> personas = new ArrayList<>();
-//        personas.add(controladorPersona.getPersonaCedula(txtParametroBusqueda.getText()));
-//        modelTablePersonaV2.setPersonas(personas);
-//        modelTablePersonaV2.fireTableDataChanged();
-        List<Persona> personaNombre = controladorPersona.getPersonaNombre(txtParametroBusqueda.getText());
-        modelTablePersonaV2.setPersonas(personaNombre);
-        modelTablePersonaV2.fireTableDataChanged();
-    }//GEN-LAST:event_btnBuscarPersonaActionPerformed
 
     private void txtParametroBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtParametroBusquedaKeyReleased
         // TODO add your handling code here:
@@ -968,6 +927,16 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         }
     }//GEN-LAST:event_btnInventaripBusquedaActionPerformed
 
+    private void txtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCedulaFocusLost
+        // TODO add your handling code here:
+        if (txtCedula.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo cedula no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            txtCedula.requestFocus();// Sirve para ubicar el cursor en un campo vacio.
+        } else if (!utilidades.validadorDeCedula(txtCedula.getText())) {
+            JOptionPane.showMessageDialog(this, "la cedula ingresada no es valida", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_txtCedulaFocusLost
+
     private Inventario valoresActualizarInventario(Inventario i) {
         i.setCodProducto(txtInventarioCodProducto.getText());
         i.setDescripcion(txtInventarioDescripcion.getText());
@@ -1033,8 +1002,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarCedula;
-    private javax.swing.JButton btnBuscarPersona;
     private javax.swing.JButton btnBuscarProveedor;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEditarProveedores;
@@ -1051,7 +1018,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JComboBox<String> comboBoxInventarioBusqueda;
     private javax.swing.JComboBox<String> comboParametroBusqueda;
     private javax.swing.JComboBox<String> comboParamtroBusquedaProveedor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1132,8 +1098,19 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     }
 
     private void buscarCliente(String text) {
-        switch (comboParametroBusqueda.getItemCount()) {
-
+        System.out.println("Text:" + text);
+        System.out.println("ObjetoSelc:" + comboParametroBusqueda.getSelectedIndex());
+        switch (comboParametroBusqueda.getSelectedIndex()) {
+            case 0://Cedula
+                modelTablePersonaV2.setPersonas(controladorPersona.getPersonaCedulaLista(text));
+                modelTablePersonaV2.fireTableDataChanged();
+                break;
+            case 1://nombre
+                modelTablePersonaV2.setPersonas(controladorPersona.getPersonaNombre(text));
+                modelTablePersonaV2.fireTableDataChanged();
+                break;
+            case 2://apellido
+                break;
         }
     }
 
