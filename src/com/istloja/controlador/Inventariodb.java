@@ -26,7 +26,18 @@ public class Inventariodb {
         //Conexion con la base de datos.
         Connection con = null;
         //INSERT INTO `ejercicio`.`persona` (`idpersona`, `cedula`, `nombres`, `apellidos`, `direccion`, `correo`, `telefono`) VALUES ('1', '1104268899', 'John', 'Solano', 'Loja', 'jpsolanoc@gmail.com', '072587392');
-        String sql = "INSERT INTO `ejercicio`.`inventario` (`cod_producto`, `descripcion`, `precio_compra`, `precio_venta`, `can_producto`) VALUES ('"+inventario.getCodProducto()+"', '"+inventario.getDescripcion()+"', '"+inventario.getPrecioCompra()+"', '"+inventario.getPrecioVenta()+"', '"+inventario.getCanProductos()+"');";
+        String sql = "INSERT INTO `ejercicio`.`inventario` (`cod_producto`, `can_producto`, `descripcion`, `precio_compra_sin_iva`, `precio_compra_con_iva`, `precio_mayorista`, `precio_cliente_fijo`, `precio_cliente_normal`, `fecha_caducidad`, `fecha_registro`, `fecha_actualizacion`) VALUES ("
+                + "'"+inventario.getCodProducto()+"', "
+                + "'"+inventario.getCanProductos()+"', "
+                + "'"+inventario.getDescripcion()+"', "
+                + "'"+inventario.getPrecioCompraSinIva()+"', "
+                + "'"+inventario.getPrecioCompraConIva()+"', "
+                + "'"+inventario.getPrecioMayorista()+"', "
+                + "'"+inventario.getPrecioClienteFijo()+"', "
+                + "'"+inventario.getPrecioClienteNormal()+"', "
+                + "'"+inventario.getFechaCaducidad()+"', "
+                + "'"+inventario.getFechaRegistro()+"', "
+                + "'"+inventario.getFechaActualizacion()+"');";
         try {
             //Es una instancia de la conexion previamente creada.
             Conexion conexion = new Conexion();
@@ -50,8 +61,19 @@ public class Inventariodb {
         Statement stm = null;
         // retorno del metodo cuando se realice la actualizacion
         boolean actualizar = false;
-        //Contatenando la opcion de actualizacion
-        String sql = "UPDATE `ejercicio`.`inventario` SET `cod_producto` = '"+inventario.getCodProducto()+"', `descripcion` = '"+inventario.getDescripcion()+"', `precio_compra` = '"+inventario.getPrecioCompra()+"', `precio_venta` = '"+inventario.getPrecioVenta()+"', `can_producto` = '"+inventario.getCanProductos()+"' WHERE (`idinventario` = '"+inventario.getIdInventario()+"');";
+        //Contatenando la opcion de actualizacion      
+        String sql = "UPDATE `ejercicio`.`inventario` SET "
+                + "`cod_producto` = '"+inventario.getCodProducto()+"', "
+                + "`can_producto` = '"+inventario.getCanProductos()+"', "
+                + "`descripcion` = '"+inventario.getDescripcion()+"', "
+                + "`precio_compra_sin_iva` = '"+inventario.getPrecioCompraSinIva()+"', "
+                + "`precio_compra_con_iva` = '"+inventario.getPrecioCompraConIva()+"', "
+                + "`precio_mayorista` = '"+inventario.getPrecioMayorista()+"', "
+                + "`precio_cliente_fijo` = '"+inventario.getPrecioClienteFijo()+"', "
+                + "`precio_cliente_normal` = '"+inventario.getPrecioClienteNormal()+"', "
+                + "`fecha_caducidad` = '"+inventario.getFechaCaducidad()+"', "
+                + "`fecha_registro` = '"+inventario.getFechaRegistro()+"', "
+                + "`fecha_actualizacion` = '"+inventario.getFechaActualizacion()+"' WHERE (`idinventario` = '"+inventario.getIdInventario()+"');";
         try {
             Conexion con = new Conexion();
             connect = con.conectarBaseDatos();
@@ -99,9 +121,14 @@ public class Inventariodb {
                 c.setIdInventario(rs.getInt(1));
                 c.setCodProducto(rs.getString(2));
                 c.setDescripcion(rs.getString(3));
-                c.setPrecioCompra(rs.getString(4));
-                c.setPrecioVenta(rs.getString(5));
-                c.setCanProductos(rs.getString(6));
+                c.setPrecioCompraSinIva(rs.getDouble(4));
+                c.setPrecioCompraConIva(rs.getDouble(5));
+                c.setPrecioMayorista(rs.getDouble(6));
+                c.setPrecioClienteFijo(rs.getDouble(7));
+                c.setPrecioClienteNormal(rs.getDouble(8));
+                c.setFechaCaducidad(rs.getDate(9));
+                c.setFechaRegistro(rs.getDate(10));
+                c.setFechaActualizacion(rs.getDate(11));
                 listaInventario.add(c);
             }
             stm.close();
@@ -130,9 +157,14 @@ public class Inventariodb {
                 c.setIdInventario(rs.getInt(1));
                 c.setCodProducto(rs.getString(2));
                 c.setDescripcion(rs.getString(3));
-                c.setPrecioCompra(rs.getString(4));
-                c.setPrecioVenta(rs.getString(5));
-                c.setCanProductos(rs.getString(6));
+                c.setPrecioCompraSinIva(rs.getDouble(4));
+                c.setPrecioCompraConIva(rs.getDouble(5));
+                c.setPrecioMayorista(rs.getDouble(6));
+                c.setPrecioClienteFijo(rs.getDouble(7));
+                c.setPrecioClienteNormal(rs.getDouble(8));
+                c.setFechaCaducidad(rs.getDate(9));
+                c.setFechaRegistro(rs.getDate(10));
+                c.setFechaActualizacion(rs.getDate(11));
                 listaInventario.add(c);
             }
             stm.close();
@@ -161,9 +193,14 @@ public class Inventariodb {
                 c.setIdInventario(rs.getInt(1));
                 c.setCodProducto(rs.getString(2));
                 c.setDescripcion(rs.getString(3));
-                c.setPrecioCompra(rs.getString(4));
-                c.setPrecioVenta(rs.getString(5));
-                c.setCanProductos(rs.getString(6));
+                c.setPrecioCompraSinIva(rs.getDouble(4));
+                c.setPrecioCompraConIva(rs.getDouble(5));
+                c.setPrecioMayorista(rs.getDouble(6));
+                c.setPrecioClienteFijo(rs.getDouble(7));
+                c.setPrecioClienteNormal(rs.getDouble(8));
+                c.setFechaCaducidad(rs.getDate(9));
+                c.setFechaRegistro(rs.getDate(10));
+                c.setFechaActualizacion(rs.getDate(11));
                 listaProveedores.add(c);
             }
             stm.close();

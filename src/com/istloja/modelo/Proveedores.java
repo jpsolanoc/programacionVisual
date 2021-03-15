@@ -5,6 +5,8 @@
  */
 package com.istloja.modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author johnp
@@ -18,6 +20,10 @@ public class Proveedores {
     private String ApellidosRepresentanteLegal;
     private String telefono;
     private String correo;
+    private String direccion;
+    private Date fechaVencimientoDeuda;//Tiempo que da el proveedor para realizar el pago de una deuda adquirida
+    private Date fechaRegistro;
+    
 
     public Proveedores() {
     }
@@ -100,6 +106,31 @@ public class Proveedores {
         this.correo = correo;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Date getFechaVencimientoDeuda() {
+        return fechaVencimientoDeuda;
+    }
+
+    public void setFechaVencimientoDeuda(Date fechaVencimientoDeuda) {
+        this.fechaVencimientoDeuda = fechaVencimientoDeuda;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    
     @Override
     public String toString() {
         return "Proveedores{" + "idProveedores=" + idProveedores + ", ruc=" + ruc + ", razonSocial=" + razonSocial + ", tipoActividad=" + tipoActividad + ", nombreRepresentanteLegal=" + nombreRepresentanteLegal + ", ApellidosRepresentanteLegal=" + ApellidosRepresentanteLegal + ", telefono=" + telefono + ", correo=" + correo + '}';

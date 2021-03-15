@@ -5,6 +5,10 @@
  */
 package com.istloja.utilidad;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 /**
  *
  * @author johnp
@@ -53,42 +57,49 @@ public class Utilidades {
         }
         return cedulaCorrecta;
     }
+
     //Metodo sirve para validar los numeros de cedula de las personas.
-    public boolean validarNumeros(String numero){
+    public boolean validarNumeros(String numero) {
         //Coleccion caracteres
-        if (numero.charAt(0)!='0') {
+        if (numero.charAt(0) != '0') {
             return false;
         }
         if (numero.isEmpty()) {
             return false;
-        }else if (numero.length()<10) {
+        } else if (numero.length() < 10) {
             return false;
         }
         try {
-            int validarNumero=Integer.parseInt(numero);
+            int validarNumero = Integer.parseInt(numero);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
+
     //Metodo para validar correo
-    public boolean validarCorreo(String correo){
+    public boolean validarCorreo(String correo) {
         for (int i = 0; i < correo.length(); i++) {
-            if (correo.charAt(i)=='@') {
+            if (correo.charAt(i) == '@') {
                 return true;
             }
         }
         return false;
     }
-    
+
     //Metodo sirve para validar los numeros de cedula de las personas.
-    public boolean validarNumerosInventario(String numero){
+    public boolean validarNumerosInventario(String numero) {
         try {
-            int validarNumero=Integer.parseInt(numero);
+            int validarNumero = Integer.parseInt(numero);
             return true;
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public String devolverFecha(Date fecha) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        return f.format(fecha);
     }
 
 }

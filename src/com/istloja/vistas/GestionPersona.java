@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package com.istloja.vistas;
+
 import com.istloja.modelo.Persona;
 import com.istloja.utilidad.Utilidades;
+import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -14,8 +17,8 @@ import javax.swing.JTextField;
  *
  * @author johnp
  */
-public class GestionPersona{
-     
+public class GestionPersona {
+
     private JTextField txtCedula;
     private JTextField txtNombres;
     private JTextField txtApellidos;
@@ -24,8 +27,9 @@ public class GestionPersona{
     private JTextField txtTelefono;
     private Utilidades utilidades;
     private JFrame frameGestionContable;
+    private JComboBox jcbGenero;
 
-    public GestionPersona(JTextField txtCedula, JTextField txtNombres, JTextField txtApellidos, JTextField txtDireccion, JTextField txtCorreo, JTextField txtTelefono, Utilidades utilidades, JFrame frameGestionContable) {
+    public GestionPersona(JTextField txtCedula, JTextField txtNombres, JTextField txtApellidos, JTextField txtDireccion, JTextField txtCorreo, JTextField txtTelefono, Utilidades utilidades, JFrame frameGestionContable, JComboBox jcbGenero) {
         this.txtCedula = txtCedula;
         this.txtNombres = txtNombres;
         this.txtApellidos = txtApellidos;
@@ -34,9 +38,8 @@ public class GestionPersona{
         this.txtTelefono = txtTelefono;
         this.utilidades = utilidades;
         this.frameGestionContable = frameGestionContable;
+        this.jcbGenero = jcbGenero;
     }
-
-    
 
     public JTextField getTxtCedula() {
         return txtCedula;
@@ -85,8 +88,8 @@ public class GestionPersona{
     public void setTxtTelefono(JTextField txtTelefono) {
         this.txtTelefono = txtTelefono;
     }
-    
-     public void limpiarCamposPersona() {
+
+    public void limpiarCamposPersona() {
         txtCedula.setText("");
         txtNombres.setText("");
         txtApellidos.setText("");
@@ -94,9 +97,10 @@ public class GestionPersona{
         txtCorreo.setText("");
         txtTelefono.setText("");
         txtCedula.requestFocus();
+        jcbGenero.setSelectedIndex(0);
     }
-    
-     public Persona guardarEditar() {
+
+    public Persona guardarEditar(boolean isEditar) {
         if (txtNombres.getText().isEmpty()) {
             JOptionPane.showMessageDialog(frameGestionContable, "El campo nombres no tiene datos.", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNombres.requestFocus();
@@ -139,7 +143,14 @@ public class GestionPersona{
         persona.setDireccion(txtDireccion.getText());
         persona.setCorreo(txtCorreo.getText());
         persona.setTelefono(txtTelefono.getText());
+        persona.setGenero(jcbGenero.getSelectedIndex());
+        if (isEditar) {
+            persona.setFechaActualizacion(new Date());       
+        }else{
+            persona.setFechaRegistro(new Date());
+        }
+
         return persona;
     }
-    
+
 }

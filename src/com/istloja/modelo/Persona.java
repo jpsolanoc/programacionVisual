@@ -5,6 +5,8 @@
  */
 package com.istloja.modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author johnp
@@ -18,18 +20,9 @@ public class Persona {
     private String direccion;
     private String correo;
     private String telefono;
-
-    public Persona(int idPersona, String cedula, String nombre, String apellidos, String direccion, String correo, String telefono) {
-        this.idPersona = idPersona;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.direccion = direccion;
-        this.correo = correo;
-        this.telefono = telefono;
-    }
-    
-    
+    private Date fechaRegistro;
+    private int genero;
+    private Date fechaActualizacion;
 
     public Persona() {
     }
@@ -37,9 +30,6 @@ public class Persona {
     public Persona(int idPersona) {
         this.idPersona = idPersona;
     }
-
-    
-    
 
     public int getIdPersona() {
         return idPersona;
@@ -97,10 +87,40 @@ public class Persona {
         this.telefono = telefono;
     }
 
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public int getGenero() {
+        return genero;
+    }
+
+    public void setGenero(int genero) {
+        this.genero = genero;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "Persona{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + '}';
+        return "Persona{" + "idPersona=" + idPersona + ", cedula=" + cedula + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", genero=" + genero + '}';
     }
+    
+    
+
+    
 
     
     
