@@ -12,7 +12,7 @@ import java.util.Date;
  * @author johnp
  */
 public class Persona {
-    
+
     private int idPersona;
     private String cedula;
     private String nombre;
@@ -23,6 +23,7 @@ public class Persona {
     private Date fechaRegistro;
     private int genero;
     private Date fechaActualizacion;
+    private Date fechaNacimiento;
 
     public Persona() {
     }
@@ -110,20 +111,20 @@ public class Persona {
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
-    
-    
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 
     @Override
     public String toString() {
-        return "Persona{" + "idPersona=" + idPersona + ", cedula=" + cedula + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", genero=" + genero + '}';
+        return "Persona{" + "idPersona=" + idPersona + ", cedula=" + cedula + ", nombre=" + nombre + ", apellidos=" + apellidos + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", fechaRegistro=" + fechaRegistro + ", genero=" + genero + ", fechaActualizacion=" + fechaActualizacion + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
     
     
 
-    
-
-    
-    
-    
-    
 }

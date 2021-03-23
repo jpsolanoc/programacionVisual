@@ -37,8 +37,12 @@ public class Personabd {
         Statement stm = null;
         //Conexion con la base de datos.
         Connection con = null;
-
-        String sql = "INSERT INTO `ejercicio`.`persona` (`cedula`, `nombres`, `apellidos`, `direccion`, `correo`, `telefono`, `fecha_registro`, `genero`) VALUES ('" + persona.getCedula() + "', '" + persona.getNombre() + "', '" + persona.getApellidos() + "', '" + persona.getDireccion() + "', '" + persona.getCorreo() + "', '" + persona.getTelefono() + "', '" + utilidades.devolverFecha(persona.getFechaRegistro()) + "', '" + persona.getGenero() + "');";
+        String sql;
+        if (persona.getFechaNacimiento()==null) {
+            sql = "INSERT INTO `ejercicio`.`persona` (`cedula`, `nombres`, `apellidos`, `direccion`, `correo`, `telefono`, `fecha_registro`, `genero`) VALUES ('" + persona.getCedula() + "', '" + persona.getNombre() + "', '" + persona.getApellidos() + "', '" + persona.getDireccion() + "', '" + persona.getCorreo() + "', '" + persona.getTelefono() + "', '" + utilidades.devolverFecha(persona.getFechaRegistro()) + "', '" + persona.getGenero() + "');";
+        }else{
+            sql = "INSERT INTO `ejercicio`.`persona` (`cedula`, `nombres`, `apellidos`, `direccion`, `correo`, `telefono`, `fecha_registro`, `genero`,`fecha_nacimiento`) VALUES ('" + persona.getCedula() + "', '" + persona.getNombre() + "', '" + persona.getApellidos() + "', '" + persona.getDireccion() + "', '" + persona.getCorreo() + "', '" + persona.getTelefono() + "', '" + utilidades.devolverFecha(persona.getFechaRegistro()) + "', '" + persona.getGenero() + "', '" + utilidades.devolverFecha(persona.getFechaNacimiento())+ "');";
+        }
         try {
             //Es una instancia de la conexion previamente creada.
             Conexion conexion = new Conexion();
@@ -118,13 +122,14 @@ public class Personabd {
                 c.setFechaRegistro(rs.getDate(8));
                 c.setGenero(rs.getInt(9));
                 c.setFechaActualizacion(rs.getDate(10));
+                c.setFechaNacimiento(rs.getDate(11));
                 listaPersonas.add(c);
             }
             stm.close();
             rs.close();
             co.close();
         } catch (SQLException e) {
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("ErrorListarPersonas:" + e.getMessage());
         }
 
         return listaPersonas;
@@ -154,6 +159,7 @@ public class Personabd {
                 c.setFechaRegistro(rs.getDate(8));
                 c.setGenero(rs.getInt(9));
                 c.setFechaActualizacion(rs.getDate(10));
+                c.setFechaNacimiento(rs.getDate(11));
             }
             stm.close();
             rs.close();
@@ -188,6 +194,7 @@ public class Personabd {
                 c.setFechaRegistro(rs.getDate(8));
                 c.setGenero(rs.getInt(9));
                 c.setFechaActualizacion(rs.getDate(10));
+                c.setFechaNacimiento(rs.getDate(11));
                 personasEncontradas.add(c);
             }
             stm.close();
@@ -223,6 +230,7 @@ public class Personabd {
                 c.setFechaRegistro(rs.getDate(8));
                 c.setGenero(rs.getInt(9));
                 c.setFechaActualizacion(rs.getDate(10));
+                c.setFechaNacimiento(rs.getDate(11));
                 personasEncontradas.add(c);
             }
             stm.close();

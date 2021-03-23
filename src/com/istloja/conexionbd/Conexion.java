@@ -19,8 +19,7 @@ public class Conexion {
     //declaramos los dadtos de conexion
     private static final String user = "userclases";
     private static final String pass = "12345678$";
-    private static final String url = "jdbc:mysql://localhost:3306/ejercicio? useUnicode=true&use"
-            + " JDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String url = "jdbc:mysql://localhost:3306/ejercicio";
 
     public Connection conectarBaseDatos() {
         //reseteamos null a la conexion de la BD
@@ -34,7 +33,7 @@ public class Conexion {
             }
             //mensaje de error
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("ErrorConexion: " + e.getMessage());
         }
         return conexion;
     }

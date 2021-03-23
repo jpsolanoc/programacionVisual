@@ -6,6 +6,7 @@
 package com.istloja.controlador;
 import com.istloja.modelo.Proveedores;
 import com.istloja.conexionbd.Conexion;
+import com.istloja.utilidad.Utilidades;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,13 @@ public class Proveedoresdb {
         //Conexion con la base de datos.
         Connection con = null;
         //INSERT INTO `ejercicio`.`persona` (`idpersona`, `cedula`, `nombres`, `apellidos`, `direccion`, `correo`, `telefono`) VALUES ('1', '1104268899', 'John', 'Solano', 'Loja', 'jpsolanoc@gmail.com', '072587392');
-        String sql = "INSERT INTO `ejercicio`.`proveedores` (`ruc`, `razon_social`, `tipo_actividad`, `nombre_representante_legal`, `apellido_representante_legal`, `telefono`, `correo`, `direccion`, `fecha_registro`, `fecha_vecimiento_deuda`) VALUES ('"+proveedor.getRuc()+"', '"+proveedor.getRazonSocial()+"', '"+proveedor.getTipoActividad()+"', '"+proveedor.getNombreRepresentanteLegal()+"', '"+proveedor.getApellidosRepresentanteLegal()+"', '"+proveedor.getTelefono()+"', '"+proveedor.getDireccion()+"', '"+proveedor.getCorreo()+"', '"+proveedor.getFechaRegistro()+"', '"+proveedor.getFechaVencimientoDeuda()+"');";
+        String sql;
+        if (proveedor.getFechaVencimientoDeuda()!=null) {
+            sql = "INSERT INTO `ejercicio`.`proveedores` (`ruc`, `razon_social`, `tipo_actividad`, `nombre_representante_legal`, `apellido_representante_legal`, `telefono`, `correo`, `direccion`, `fecha_registro`, `fecha_vecimiento_deuda`) VALUES ('"+proveedor.getRuc()+"', '"+proveedor.getRazonSocial()+"', '"+proveedor.getTipoActividad()+"', '"+proveedor.getNombreRepresentanteLegal()+"', '"+proveedor.getApellidosRepresentanteLegal()+"', '"+proveedor.getTelefono()+"', '"+proveedor.getDireccion()+"', '"+proveedor.getCorreo()+"', '"+proveedor.getFechaRegistro()+"', '"+proveedor.getFechaVencimientoDeuda()+"');";
+        }else{
+            sql = "INSERT INTO `ejercicio`.`proveedores` (`ruc`, `razon_social`, `tipo_actividad`, `nombre_representante_legal`, `apellido_representante_legal`, `telefono`, `correo`, `direccion`, `fecha_registro`) VALUES ('"+proveedor.getRuc()+"', '"+proveedor.getRazonSocial()+"', '"+proveedor.getTipoActividad()+"', '"+proveedor.getNombreRepresentanteLegal()+"', '"+proveedor.getApellidosRepresentanteLegal()+"', '"+proveedor.getTelefono()+"', '"+proveedor.getCorreo()+"', '"+proveedor.getDireccion()+"', '"+new Utilidades().devolverFecha(proveedor.getFechaRegistro())+"');";
+        }
+        
         try {
             //Es una instancia de la conexion previamente creada.
             Conexion conexion = new Conexion();

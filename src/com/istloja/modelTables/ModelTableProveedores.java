@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelTableProveedores extends AbstractTableModel {
 
-    private String[] m_colNames = {"RUC", "RAZON SOCIAL", "TIPO aCTIVIDAD", "NOMBRE REPRESENTANTE LEGAL", "APELLIDOS REPRESENTANTE LEGAL", "TELEFONO", "CORREO"};
+    private String[] m_colNames = {"RUC", "RAZON SOCIAL", "TIPO ACTIVIDAD", "NOMBRE REPRESENTANTE LEGAL", "APELLIDOS REPRESENTANTE LEGAL", "TELEFONO", "CORREO"};
     private List<Proveedores> proveedores;
     private GestionContable gContable;
 
