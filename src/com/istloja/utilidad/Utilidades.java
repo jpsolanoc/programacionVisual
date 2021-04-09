@@ -101,5 +101,9 @@ public class Utilidades {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         return f.format(fecha);
     }
+    
+    public double dosDecimales(double entrada){
+        return Math.round(entrada*100.0)/100.0;
+    }
 
 }

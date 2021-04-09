@@ -51,6 +51,10 @@ public class Persona {
     public String getNombre() {
         return nombre;
     }
+    
+    public String getNombreCompletos() {
+        return nombre+" "+apellidos;
+    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

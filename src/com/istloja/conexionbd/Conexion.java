@@ -27,11 +27,6 @@ public class Conexion {
         try {
             //conexion a la BD
             conexion = (Connection) DriverManager.getConnection(url, user, pass);
-            //comprobacion
-            if (conexion != null) {
-                System.out.println("Conexion exitosa");
-            }
-            //mensaje de error
         } catch (Exception e) {
             System.out.println("ErrorConexion: " + e.getMessage());
         }
