@@ -12,7 +12,7 @@ import java.util.Date;
  * @author johnp
  */
 public class Inventario {
-    
+
     private int idInventario;
     private String codProducto;
     private int canProductos;
@@ -25,6 +25,9 @@ public class Inventario {
     private Date fechaCaducidad;
     private Date fechaRegistro;
     private Date fechaActualizacion;
+
+    //Atributo temporal para definir el numero de productos seleccionados por el cliente.
+    private int cantidadProductosVender;
 
     public int getIdInventario() {
         return idInventario;
@@ -121,10 +124,20 @@ public class Inventario {
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
-   
+
+    public int getCantidadProductosVender() {
+        return cantidadProductosVender;
+    }
+
+    public void setCantidadProductosVender(int cantidadProductosVender) {
+        this.cantidadProductosVender = cantidadProductosVender;
+    }
+
     
     
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Inventario{" + "idInventario=" + idInventario + ", codProducto=" + codProducto + ", canProductos=" + canProductos + ", descripcion=" + descripcion + ", precioCompraSinIva=" + precioCompraSinIva + ", precioCompraConIva=" + precioCompraConIva + ", precioMayorista=" + precioMayorista + ", precioClienteFijo=" + precioClienteFijo + ", precioClienteNormal=" + precioClienteNormal + ", fechaCaducidad=" + fechaCaducidad + ", fechaRegistro=" + fechaRegistro + ", fechaActualizacion=" + fechaActualizacion + '}';
+    }
+
 }

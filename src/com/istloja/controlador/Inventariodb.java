@@ -164,15 +164,16 @@ public class Inventariodb {
                 Inventario c = new Inventario();
                 c.setIdInventario(rs.getInt(1));
                 c.setCodProducto(rs.getString(2));
-                c.setDescripcion(rs.getString(3));
-                c.setPrecioCompraSinIva(rs.getDouble(4));
-                c.setPrecioCompraConIva(rs.getDouble(5));
-                c.setPrecioMayorista(rs.getDouble(6));
-                c.setPrecioClienteFijo(rs.getDouble(7));
-                c.setPrecioClienteNormal(rs.getDouble(8));
-                c.setFechaCaducidad(rs.getDate(9));
-                c.setFechaRegistro(rs.getDate(10));
-                c.setFechaActualizacion(rs.getDate(11));
+                c.setCanProductos(rs.getInt(3));
+                c.setDescripcion(rs.getString(4));
+                c.setPrecioCompraSinIva(rs.getDouble(5));
+                c.setPrecioCompraConIva(rs.getDouble(6));
+                c.setPrecioMayorista(rs.getDouble(7));
+                c.setPrecioClienteFijo(rs.getDouble(8));
+                c.setPrecioClienteNormal(rs.getDouble(9));
+                c.setFechaCaducidad(rs.getDate(10));
+                c.setFechaRegistro(rs.getDate(11));
+                c.setFechaActualizacion(rs.getDate(12));
                 listaInventario.add(c);
             }
             stm.close();
@@ -198,17 +199,18 @@ public class Inventariodb {
             rs = stm.executeQuery(sql);
             while (rs.next()) {
                 Inventario c = new Inventario();
-                c.setIdInventario(rs.getInt(1));
+                 c.setIdInventario(rs.getInt(1));
                 c.setCodProducto(rs.getString(2));
-                c.setDescripcion(rs.getString(3));
-                c.setPrecioCompraSinIva(rs.getDouble(4));
-                c.setPrecioCompraConIva(rs.getDouble(5));
-                c.setPrecioMayorista(rs.getDouble(6));
-                c.setPrecioClienteFijo(rs.getDouble(7));
-                c.setPrecioClienteNormal(rs.getDouble(8));
-                c.setFechaCaducidad(rs.getDate(9));
-                c.setFechaRegistro(rs.getDate(10));
-                c.setFechaActualizacion(rs.getDate(11));
+                c.setCanProductos(rs.getInt(3));
+                c.setDescripcion(rs.getString(4));
+                c.setPrecioCompraSinIva(rs.getDouble(5));
+                c.setPrecioCompraConIva(rs.getDouble(6));
+                c.setPrecioMayorista(rs.getDouble(7));
+                c.setPrecioClienteFijo(rs.getDouble(8));
+                c.setPrecioClienteNormal(rs.getDouble(9));
+                c.setFechaCaducidad(rs.getDate(10));
+                c.setFechaRegistro(rs.getDate(11));
+                c.setFechaActualizacion(rs.getDate(12));
                 listaInventario.add(c);
             }
             stm.close();
@@ -257,5 +259,43 @@ public class Inventariodb {
 
         return listaProveedores;
     }
+    
+        public Inventario obtenerProductosInventarioCodigoVenta(String codigo) {
+        System.out.println("BusquedaCodigo" + codigo);
+        Connection co = null;
+        Statement stm = null;
+        //Sentencia de JDBC para obtener valores de la base de datos.
+        ResultSet rs = null;
+        String sql = "SELECT * FROM ejercicio.inventario where cod_producto = '" + codigo + "';";
+       Inventario c = null;
+        try {
+            co = new Conexion().conectarBaseDatos();
+            stm = co.createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                c = new Inventario();
+                c.setIdInventario(rs.getInt(1));
+                c.setCodProducto(rs.getString(2));
+                c.setCanProductos(rs.getInt(3));
+                c.setDescripcion(rs.getString(4));
+                c.setPrecioCompraSinIva(rs.getDouble(5));
+                c.setPrecioCompraConIva(rs.getDouble(6));
+                c.setPrecioMayorista(rs.getDouble(7));
+                c.setPrecioClienteFijo(rs.getDouble(8));
+                c.setPrecioClienteNormal(rs.getDouble(9));
+                c.setFechaCaducidad(rs.getDate(10));
+                c.setFechaRegistro(rs.getDate(11));
+                c.setFechaActualizacion(rs.getDate(12));
+            }
+            stm.close();
+            rs.close();
+            co.close();
+        } catch (SQLException e) {
+            System.out.println("Error:" + e.getMessage());
+        }
+
+        return c;
+    }
+
 
 }
