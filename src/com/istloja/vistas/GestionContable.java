@@ -6,6 +6,7 @@
 package com.istloja.vistas;
 
 import com.istloja.controlador.Inventariodb;
+import com.istloja.controlador.NotaVentadb;
 import com.istloja.controlador.Personabd;
 import com.istloja.controlador.Proveedoresdb;
 import com.istloja.modelTables.ModelTablePersona;
@@ -21,6 +22,7 @@ import com.istloja.modelTables.ModelTableInventario;
 import com.istloja.modelTables.ModelTableProveedores;
 import com.istloja.modelTables.ModelTableVenta;
 import com.istloja.modelo.Inventario;
+import com.istloja.modelo.NotaVenta;
 import com.istloja.modelo.ProductoVenta;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -48,6 +50,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private Inventariodb controladorInventario;
     private Inventario inventarioSeleccionado;
     private Proveedores proveedorSelect;
+    private NotaVentadb controladorNotaVenta;
 
     /**
      * Creates new form GestionPersonaV1
@@ -56,6 +59,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         controladorPersona = new Personabd();
         controladorProveedor = new Proveedoresdb();
         controladorInventario = new Inventariodb();
+        controladorNotaVenta = new NotaVentadb();
         modelTablePersonaV2 = new ModelTablePersonaV2(controladorPersona.obtenerPersonas(), this);
         modelTableProveedores = new ModelTableProveedores(controladorProveedor.obtenerProveedores(), this);
         modelTableInventario = new ModelTableInventario(controladorInventario.obtenerProductosInventario(), this);
@@ -169,7 +173,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         panelVenta = new javax.swing.JPanel();
         txtTituloVenta = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNumeroNotaVenta = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         txtBuscarClienteNotaVenta = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -194,11 +198,11 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtIva = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboTipoPago = new javax.swing.JComboBox<>();
         btnBusuqedaAvanzada = new javax.swing.JButton();
-        btnInventarioCrear1 = new javax.swing.JButton();
-        btnLimpiarInventario1 = new javax.swing.JButton();
-        btnInventarioCrear2 = new javax.swing.JButton();
+        btnGuardarNotaVenta = new javax.swing.JButton();
+        btnLimpiarNotaVenta = new javax.swing.JButton();
+        btnImprimirNotaVenta = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         menuGeneral = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
@@ -932,7 +936,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
 
         jLabel32.setText("Tipo Pago");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta de credito", " " }));
+        comboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta de credito", " " }));
 
         btnBusuqedaAvanzada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/busqueda_avanzada.png"))); // NOI18N
         btnBusuqedaAvanzada.setText("BUSQUEDA AVANZADA");
@@ -942,29 +946,29 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
             }
         });
 
-        btnInventarioCrear1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/diskette.png"))); // NOI18N
-        btnInventarioCrear1.setText("Guardar");
-        btnInventarioCrear1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarNotaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/diskette.png"))); // NOI18N
+        btnGuardarNotaVenta.setText("Guardar");
+        btnGuardarNotaVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInventarioCrear1ActionPerformed(evt);
+                btnGuardarNotaVentaActionPerformed(evt);
             }
         });
 
-        btnLimpiarInventario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/limpiar.png"))); // NOI18N
-        btnLimpiarInventario1.setText("LIMPIAR");
-        btnLimpiarInventario1.setToolTipText("Limpiar Campos");
-        btnLimpiarInventario1.setPreferredSize(new java.awt.Dimension(122, 36));
-        btnLimpiarInventario1.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpiarNotaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/limpiar.png"))); // NOI18N
+        btnLimpiarNotaVenta.setText("LIMPIAR");
+        btnLimpiarNotaVenta.setToolTipText("Limpiar Campos");
+        btnLimpiarNotaVenta.setPreferredSize(new java.awt.Dimension(122, 36));
+        btnLimpiarNotaVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarInventario1ActionPerformed(evt);
+                btnLimpiarNotaVentaActionPerformed(evt);
             }
         });
 
-        btnInventarioCrear2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/impresora.png"))); // NOI18N
-        btnInventarioCrear2.setText("Imprimir");
-        btnInventarioCrear2.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimirNotaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/istloja/resource/img/impresora.png"))); // NOI18N
+        btnImprimirNotaVenta.setText("Imprimir");
+        btnImprimirNotaVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInventarioCrear2ActionPerformed(evt);
+                btnImprimirNotaVentaActionPerformed(evt);
             }
         });
 
@@ -983,7 +987,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                                     .addGroup(panelVentaLayout.createSequentialGroup()
                                         .addComponent(jLabel32)
                                         .addGap(27, 27, 27)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(comboTipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panelVentaLayout.createSequentialGroup()
                                         .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(panelVentaLayout.createSequentialGroup()
@@ -1001,7 +1005,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                                                     .addComponent(txtNombreClienteNotaVenta, javax.swing.GroupLayout.Alignment.TRAILING)
                                                     .addComponent(txtTelefonoNotaVenta)
                                                     .addComponent(txtBuscarClienteNotaVenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jTextField1))))
+                                                    .addComponent(txtNumeroNotaVenta))))
                                         .addGap(27, 27, 27)
                                         .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel26)
@@ -1039,11 +1043,11 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                                 .addComponent(btnBusuqedaAvanzada))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVentaLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInventarioCrear2)
+                        .addComponent(btnImprimirNotaVenta)
                         .addGap(18, 18, 18)
-                        .addComponent(btnInventarioCrear1)
+                        .addComponent(btnGuardarNotaVenta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLimpiarInventario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLimpiarNotaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelVentaLayout.setVerticalGroup(
@@ -1053,7 +1057,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                 .addComponent(txtTituloVenta)
                 .addGap(30, 30, 30)
                 .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroNotaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1086,7 +1090,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                     .addComponent(jLabel29)
                     .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboTipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
@@ -1097,9 +1101,9 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelVentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInventarioCrear1)
-                    .addComponent(btnLimpiarInventario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnInventarioCrear2))
+                    .addComponent(btnGuardarNotaVenta)
+                    .addComponent(btnLimpiarNotaVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnImprimirNotaVenta))
                 .addContainerGap())
         );
 
@@ -1470,15 +1474,15 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         // TODO add your handling code here:
         limpiarInventario();
     }//GEN-LAST:event_btnLimpiarInventarioActionPerformed
-
+    private Persona personaCedulaNotaVenta;
     private void txtBuscarClienteNotaVentaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarClienteNotaVentaFocusLost
         // TODO add your handling code here:
         if (!txtBuscarClienteNotaVenta.getText().isEmpty()) {
-            Persona personaCedula = controladorPersona.getPersonaCedula(txtBuscarClienteNotaVenta.getText());
-            if (personaCedula != null) {
-                txtNombreClienteNotaVenta.setText(personaCedula.getNombreCompletos());
-                txtDireccionNotaVenta.setText(personaCedula.getDireccion());
-                txtTelefonoNotaVenta.setText(personaCedula.getTelefono());
+            personaCedulaNotaVenta = controladorPersona.getPersonaCedula(txtBuscarClienteNotaVenta.getText());
+            if (personaCedulaNotaVenta != null) {
+                txtNombreClienteNotaVenta.setText(personaCedulaNotaVenta.getNombreCompletos());
+                txtDireccionNotaVenta.setText(personaCedulaNotaVenta.getDireccion());
+                txtTelefonoNotaVenta.setText(personaCedulaNotaVenta.getTelefono());
                 txtFechaVentaNotaVenta.setText(utilidades.devolverFecha(new Date()));
             } else {
                 JOptionPane.showMessageDialog(this, "El número de cédula del cliente no se encuentra en el sistema, verifíque o ingrese el cliente al sistema.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -1491,6 +1495,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         txtDireccionNotaVenta.setText("");
         txtTelefonoNotaVenta.setText("");
         txtFechaVentaNotaVenta.setText("");
+        personaCedulaNotaVenta = null;
     }//GEN-LAST:event_txtBuscarClienteNotaVentaFocusGained
     List<ProductoVenta> productosVenta;
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
@@ -1519,17 +1524,61 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         }
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 
-    private void btnInventarioCrear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioCrear1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInventarioCrear1ActionPerformed
 
-    private void btnLimpiarInventario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarInventario1ActionPerformed
+    private void btnGuardarNotaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarNotaVentaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLimpiarInventario1ActionPerformed
+        if (personaCedulaNotaVenta==null) {
+           JOptionPane.showMessageDialog(this, "No hay un cliente seleccionado.", "ERROR", JOptionPane.ERROR_MESSAGE); 
+           return;
+        }
+        NotaVenta notaVenta = new NotaVenta();
+        notaVenta.setNumeroNotaVenta(txtNumeroNotaVenta.getText());
+        notaVenta.setPersonaIdPersona(personaCedulaNotaVenta.getIdPersona());
+        notaVenta.setFechaVenta(new Date());
+        notaVenta.setSubTotal(Double.parseDouble(txtSubTotal.getText()));
+        notaVenta.setIva(Double.parseDouble(txtIva.getText()));
+        notaVenta.setTotal(Double.parseDouble(txtSubTotal.getText()));
+        notaVenta.setTipoPago(comboTipoPago.getSelectedIndex());
+        
+        
+//        for (ProductoVenta productoVenta : productosVenta) {
+//            copntroladorProducto.
+//        }
+        if (controladorNotaVenta.registrarNotaVenta(notaVenta)) {
+            JOptionPane.showMessageDialog(this, "Nota de venta registrada con éxito en el sistema.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            limpiarNotaVenta();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo registrar la nota de venta revise los parametros.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
 
-    private void btnInventarioCrear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioCrear2ActionPerformed
+    }//GEN-LAST:event_btnGuardarNotaVentaActionPerformed
+
+    private void btnLimpiarNotaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarNotaVentaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInventarioCrear2ActionPerformed
+        limpiarNotaVenta();
+    }//GEN-LAST:event_btnLimpiarNotaVentaActionPerformed
+
+    public void limpiarNotaVenta() {
+        txtNumeroNotaVenta.setText("");
+        txtBuscarClienteNotaVenta.setText("");
+        txtNombreClienteNotaVenta.setText("");
+        txtDireccionNotaVenta.setText("");
+        txtTelefonoNotaVenta.setText("");
+        txtFechaVentaNotaVenta.setText("");
+        txtIdProductoNotaVenta.setText("");
+        txtCantidadProuductoNotaVenta.setText("");
+        txtSubTotal.setText("");
+        txtIva.setText("");
+        txtTotal.setText("");
+        productosVenta.clear();
+        modeloTablaVenta.setProductoVentas(productosVenta);
+        modeloTablaVenta.fireTableDataChanged();
+        txtNumeroNotaVenta.requestFocus();// Para dar el foco a un componente
+    }
+
+    private void btnImprimirNotaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirNotaVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImprimirNotaVentaActionPerformed
 
     private void btnBusuqedaAvanzadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusuqedaAvanzadaActionPerformed
         // TODO add your handling code here:
@@ -1657,21 +1706,21 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnElimnarProveedores;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarNotaVenta;
     private javax.swing.JButton btnGuardarProveedores;
+    private javax.swing.JButton btnImprimirNotaVenta;
     private javax.swing.JButton btnInventarioCrear;
-    private javax.swing.JButton btnInventarioCrear1;
-    private javax.swing.JButton btnInventarioCrear2;
     private javax.swing.JButton btnInventarioEditar;
     private javax.swing.JButton btnInventarioEliminar;
     private javax.swing.JButton btnInventaripBusqueda;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnLimpiarInventario;
-    private javax.swing.JButton btnLimpiarInventario1;
+    private javax.swing.JButton btnLimpiarNotaVenta;
     private javax.swing.JButton btnLimpiarProveedor;
     private javax.swing.JComboBox<String> comboBoxInventarioBusqueda;
     private javax.swing.JComboBox<String> comboParametroBusqueda;
     private javax.swing.JComboBox<String> comboParamtroBusquedaProveedor;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboTipoPago;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateFechaNacimiento;
     private javax.swing.JLabel jLabel1;
@@ -1715,7 +1764,6 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> jcboxGenero;
     private javax.swing.JRadioButton jrbCedula;
     private javax.swing.JRadioButton jrbPassaporte;
@@ -1760,6 +1808,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private javax.swing.JTextField txtNombreClienteNotaVenta;
     private javax.swing.JTextField txtNombreRepresentateLegalProveedores;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtNumeroNotaVenta;
     private javax.swing.JTextField txtParametroBusqueda;
     private javax.swing.JTextField txtParametroBusquedaProveedor;
     private javax.swing.JTextField txtPrecioClienteFijo;

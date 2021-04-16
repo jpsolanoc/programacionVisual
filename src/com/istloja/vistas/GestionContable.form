@@ -1209,7 +1209,7 @@
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="comboTipoPago" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1230,7 +1230,7 @@
                                                           <Component id="txtNombreClienteNotaVenta" alignment="1" max="32767" attributes="0"/>
                                                           <Component id="txtTelefonoNotaVenta" alignment="0" max="32767" attributes="0"/>
                                                           <Component id="txtBuscarClienteNotaVenta" alignment="1" max="32767" attributes="0"/>
-                                                          <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="txtNumeroNotaVenta" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                               </Group>
@@ -1283,11 +1283,11 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnInventarioCrear2" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnImprimirNotaVenta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnInventarioCrear1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnGuardarNotaVenta" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnLimpiarInventario1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnLimpiarNotaVenta" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -1301,7 +1301,7 @@
                       <Component id="txtTituloVenta" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNumeroNotaVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -1339,7 +1339,7 @@
                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtSubTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboTipoPago" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1353,9 +1353,9 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnInventarioCrear1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnLimpiarInventario1" alignment="3" max="32767" attributes="0"/>
-                          <Component id="btnInventarioCrear2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardarNotaVenta" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLimpiarNotaVenta" alignment="3" max="32767" attributes="0"/>
+                          <Component id="btnImprimirNotaVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1379,7 +1379,7 @@
                 <Property name="text" type="java.lang.String" value="N&#xda;MERO NOTA VENTA:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="txtNumeroNotaVenta">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel22">
               <Properties>
@@ -1499,7 +1499,7 @@
                 <Property name="text" type="java.lang.String" value="Tipo Pago"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox1">
+            <Component class="javax.swing.JComboBox" name="comboTipoPago">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
@@ -1524,7 +1524,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBusuqedaAvanzadaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnInventarioCrear1">
+            <Component class="javax.swing.JButton" name="btnGuardarNotaVenta">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/istloja/resource/img/diskette.png"/>
@@ -1532,10 +1532,10 @@
                 <Property name="text" type="java.lang.String" value="Guardar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInventarioCrear1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarNotaVentaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnLimpiarInventario1">
+            <Component class="javax.swing.JButton" name="btnLimpiarNotaVenta">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/istloja/resource/img/limpiar.png"/>
@@ -1547,10 +1547,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimpiarInventario1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimpiarNotaVentaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnInventarioCrear2">
+            <Component class="javax.swing.JButton" name="btnImprimirNotaVenta">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/istloja/resource/img/impresora.png"/>
@@ -1558,7 +1558,7 @@
                 <Property name="text" type="java.lang.String" value="Imprimir"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInventarioCrear2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirNotaVentaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

@@ -19,5 +19,4 @@ public interface ComunicacionVistaModelosTablas {
    void clickProveedores(Proveedores p);
    void clickInventario(Inventario p);
    void clickProductoVender(ProductoVenta p);
-   
 }

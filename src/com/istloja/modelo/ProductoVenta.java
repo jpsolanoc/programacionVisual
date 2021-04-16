@@ -10,6 +10,7 @@ package com.istloja.modelo;
  * @author jpsolanoc
  */
 public class ProductoVenta {
+    
     private  int cantidad;
     private String descripcion;
     private double subTotal;
