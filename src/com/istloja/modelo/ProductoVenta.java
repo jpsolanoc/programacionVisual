@@ -11,10 +11,22 @@ package com.istloja.modelo;
  */
 public class ProductoVenta {
     
+    private int IdProductoInventario;
     private  int cantidad;
     private String descripcion;
     private double subTotal;
     private double total;
+    
+
+    public int getIdProductoInventario() {
+        return IdProductoInventario;
+    }
+
+    public void setIdProductoInventario(int IdProductoInventario) {
+        this.IdProductoInventario = IdProductoInventario;
+    }
+    
+    
 
     public int getCantidad() {
         return cantidad;

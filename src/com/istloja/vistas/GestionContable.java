@@ -8,6 +8,7 @@ package com.istloja.vistas;
 import com.istloja.controlador.Inventariodb;
 import com.istloja.controlador.NotaVentadb;
 import com.istloja.controlador.Personabd;
+import com.istloja.controlador.ProductoVendidobd;
 import com.istloja.controlador.Proveedoresdb;
 import com.istloja.modelTables.ModelTablePersona;
 import com.istloja.modelTables.ModelTablePersonaV2;
@@ -23,12 +24,11 @@ import com.istloja.modelTables.ModelTableProveedores;
 import com.istloja.modelTables.ModelTableVenta;
 import com.istloja.modelo.Inventario;
 import com.istloja.modelo.NotaVenta;
+import com.istloja.modelo.ProductoVendido;
 import com.istloja.modelo.ProductoVenta;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 public class GestionContable extends javax.swing.JFrame implements ComunicacionVistaModelosTablas {
 
     // Iconos Free https://www.flaticon.es/
+    //https://www.youtube.com/watch?v=dydTrAcDZ9I Reportes
     private Utilidades utilidades;
     private Personabd controladorPersona;
     private Persona personaEditarEliminar;
@@ -51,6 +52,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
     private Inventario inventarioSeleccionado;
     private Proveedores proveedorSelect;
     private NotaVentadb controladorNotaVenta;
+    private ProductoVendidobd controladorProductoVendido;
 
     /**
      * Creates new form GestionPersonaV1
@@ -60,6 +62,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         controladorProveedor = new Proveedoresdb();
         controladorInventario = new Inventariodb();
         controladorNotaVenta = new NotaVentadb();
+        controladorProductoVendido = new ProductoVendidobd();
         modelTablePersonaV2 = new ModelTablePersonaV2(controladorPersona.obtenerPersonas(), this);
         modelTableProveedores = new ModelTableProveedores(controladorProveedor.obtenerProveedores(), this);
         modelTableInventario = new ModelTableInventario(controladorInventario.obtenerProductosInventario(), this);
@@ -1506,6 +1509,7 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
             if (obtenerProductosInventarioCodigoVenta != null) {
                 obtenerProductosInventarioCodigoVenta.setCantidadProductosVender(Integer.parseInt(txtCantidadProuductoNotaVenta.getText()));
                 ProductoVenta productoVenta = new ProductoVenta();
+                productoVenta.setIdProductoInventario(obtenerProductosInventarioCodigoVenta.getIdInventario());
                 productoVenta.setCantidad(obtenerProductosInventarioCodigoVenta.getCantidadProductosVender());
                 productoVenta.setDescripcion(obtenerProductosInventarioCodigoVenta.getDescripcion());
                 //Esta linea nos ayuda a calcular el valor del producto sin iva
@@ -1539,12 +1543,25 @@ public class GestionContable extends javax.swing.JFrame implements ComunicacionV
         notaVenta.setIva(Double.parseDouble(txtIva.getText()));
         notaVenta.setTotal(Double.parseDouble(txtSubTotal.getText()));
         notaVenta.setTipoPago(comboTipoPago.getSelectedIndex());
-        
-        
-//        for (ProductoVenta productoVenta : productosVenta) {
-//            copntroladorProducto.
-//        }
+        // Inseertar la nota de venta
         if (controladorNotaVenta.registrarNotaVenta(notaVenta)) {
+            // Me sirve para obtener el ultimo id de la base de datos de la tabla nota de venta.
+            notaVenta = controladorNotaVenta.idRegistrarNotaVenta(notaVenta);
+            if (notaVenta.getIdNotaVenta()!=0) {
+                for (ProductoVenta productoVenta : productosVenta) {
+                    ProductoVendido productoVendido = new ProductoVendido();
+                    productoVendido.setInventarioIdInvetario(productoVenta.getIdProductoInventario());
+                    productoVendido.setNotaVentaIdNotaVenta(notaVenta.getIdNotaVenta());
+                    productoVendido.setCantidadProductos(productoVenta.getCantidad());
+                    productoVendido.setValorTotal(productoVenta.getTotal());
+                    if (!controladorProductoVendido.registrarProductosVendidos(productoVendido)) {
+                        JOptionPane.showMessageDialog(this, "Sucedio un error al registrar los productos.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "No se pudo registrar la nota de venta revise los parametros.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
             JOptionPane.showMessageDialog(this, "Nota de venta registrada con éxito en el sistema.", "Información", JOptionPane.INFORMATION_MESSAGE);
             limpiarNotaVenta();
         } else {
